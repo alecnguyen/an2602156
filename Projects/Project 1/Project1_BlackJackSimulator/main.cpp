@@ -6,8 +6,11 @@
  */
 
 //system libraries
-#include <iostream>//Input/Output Library
-#include <cstdlib>
+#include <iostream>  //Input/Output Library
+#include <ctime>     //Time for random seed
+#include <cstdlib>   //Random number seed
+#include <iomanip>   //Formatting
+#include <fstream>   //File I/O
 using namespace std;//Namespace of the System Libraries
 
 //User Libraries (Libraries created by the user)
@@ -15,10 +18,13 @@ using namespace std;//Namespace of the System Libraries
 //Global Constants
 
 //Function Prototypes
+void createDeck(int deck);
+void CardShuffle(int deck, int size);
 
 //Execution Begins Here!
-int main(int argc, char** argv) {
+int main(int argc, char** argv) {    
     //Declare Variables
+    int deck = 52;
     
     //Input Data
     
