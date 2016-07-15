@@ -18,20 +18,32 @@ using namespace std;//Namespace of the System Libraries
 //Global Constants
 
 //Function Prototypes
-void createDeck(int deck);
-void CardShuffle(int deck, int size);
 
 //Execution Begins Here!
 int main(int argc, char** argv) {    
     //Declare Variables
     int deck = 52;
-    
+    int player = 0;
+    int house = 0;
+    char playagain = 'Y';
     //Input Data
+    cout<<"We are playing Black Jack.\n";
+    cout<<"Rules:\n";
+    cout<<"The program will deal you and the house one card each and you can choose\n";
+    cout<<"to either HIT(draw 1 more card) or STAND(keep your hand and try to beat the\n";
+    cout<<"dealer's hand\n";
+    cout<<"Cards are worth their face value 2-9, face cards are worth 10 and aces\n";
+    cout<<"are worth 1 or 11. To win you must have a greater value of cards in your\n";
+    cout<<"hand versus the House's hand without going over 21.\n";
+    cout<<"Let's Play!\n";
+    do{
     
     //Process the Data
     
     //Output the processed Data
-    
+        cout<<"Would you like to play another game?\n";
+        cin>>playagain;
+    }while(playagain == 'y' || playagain == 'Y');
     //Exit Stage Stage!
     return 0;
 }
