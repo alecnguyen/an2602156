@@ -50,9 +50,13 @@ int main(int argc, char** argv) {
         getCard(player, drawCard(deck));
         getCard(house, drawCard(deck));
         getCard(house, drawCard(deck));
-        cout<<""
-
-        cout<<"Would you like to play another game?\n";
+        cout<<"You've been dealt\n";
+        for(int i = 1; i < 10; i++){
+            if(deck[i] != 0){
+                
+            }
+        }
+        cout<<"Would you like to play another game? [Y/N] \n";
         cin>>playagain;
     }while(playagain == 'y' || playagain == 'Y');
     //Exit Stage Stage!
