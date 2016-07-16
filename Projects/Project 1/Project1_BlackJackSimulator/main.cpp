@@ -22,6 +22,7 @@ void shuffleCards(int deck[], int size);
 int drawCard(int deck[]);
 void getCard(int hand[], int giveCard); 
 int randomize(int minimum, int size);
+void deal(int card);
 
 //Execution Begins Here!
 int main(int argc, char** argv) {
@@ -53,7 +54,8 @@ int main(int argc, char** argv) {
         cout<<"You've been dealt\n";
         for(int i = 1; i < 10; i++){
             if(deck[i] != 0){
-                
+                deal(deck[i]);
+                cout<<endl;
             }
         }
         cout<<"Would you like to play another game? [Y/N] \n";
@@ -77,7 +79,7 @@ int randomize(int minimum, int size){ //Gets random number
     bool firstpass=true;
     int random;
     if (firstpass) {
-            srand( static_cast<unsigned int>(time(NULL)) );
+            srand(static_cast<unsigned int>(time(NULL)) );
             firstpass=false;
     }
     random = rand() % (size - minimum + 1) + minimum;
@@ -100,4 +102,41 @@ void getCard(int hand[], int giveCard){
         }
     }
 }
- 
+void deal(int card){
+    if(card == 0){
+        cout<<"";
+    }else{
+        switch(card % 100){
+            case 1: 
+                cout<<"A";
+                break;
+            case 11: 
+                cout<<"J";
+                break;
+            case 12: 
+                cout<<"K";
+                break;
+            case 13: 
+                cout<<"Q";
+                break;
+            case 14:
+                cout<<"A";
+                break;
+            default:
+            cout<<card % 100;
+        } 
+    }
+    if(card == 0){
+        cout << "";
+    }else{
+        if((card >= 101) && (card <=114)){
+            cout<<static_cast<char>(3);
+        }else if((card >= 201) && (card <= 214)){
+            cout<< static_cast<char>(4);
+        }else if((card >= 301) && (card <= 314)){
+            cout<< static_cast<char>(5);
+        }else if((card >= 401) && (card <= 414)){
+            cout<< static_cast<char>(6);
+        }
+    }
+}
