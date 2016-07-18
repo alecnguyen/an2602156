@@ -16,7 +16,7 @@ using namespace std;//Namespace of the System Libraries
 //Global Constants
 
 //Function Prototypes
-void inventory(char name[], int gold, char weapon, char armor, char item);
+void inventory(int gold, char weapon, char armor, char item);
 bool InnPath(int gold, char weapon, char armor, char item, char ans, bool status);
 bool ForestPath(int gold, char weapon, char armor, char item, char ans, bool status);
 bool Idle(int gold, char weapon, char armor, char item, char ans, bool status);
@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     bool status = true; //Status either true(alive) or false(dead), if you die the adventure ends
     char name[20];
     char weapon;
-    char armor;
+    char armor = 'N'; //default for no armor
     char item;
     char ans;
     char tryagain;
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
                     break;
                 case 'g':
                 case 'G':
-                    cout<<"\"...Yeah no. Look at something you can afford.\"\n\t-Shopkeeper\n";
+                    cout<<"\"...Yeah no, and don't bother asking me where I got that either. Look at something you can afford instead.\"\n\t-Shopkeeper\n";
                     cin>>ans;
                 default:
                     cout<<"\"Do you speak English dude?\"\n\t-Shopkeeper\n";
@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
             switch(ans){
                 case 'i':
                 case 'I':
-                    inventory(name, gold, weapon, armor, item);
+                    inventory(gold, weapon, armor, item);
                     break;
                 default:
                     cout<<"Try it again enter \"I\"."<<endl;
@@ -130,7 +130,7 @@ int main(int argc, char** argv) {
             switch(ans){
                 case 'i':
                 case 'I':
-                    inventory(name, gold, weapon, armor, item);
+                    inventory(gold, weapon, armor, item);
                     break;
                 case 'l':
                 case 'L':
@@ -144,12 +144,11 @@ int main(int argc, char** argv) {
                     status = Idle(gold, weapon, armor, item, ans, status);
             }
             if(ans == 'L' || ans == 'l'){
-
+                status = castle(gold, weapon, armor, item, ans, status);
             }else if(ans == 'r' || ans == 'R'){
-                valley(gold, weapon, armor, item, ans, status);
+                status = valley(gold, weapon, armor, item, ans, status);
+                item = 'K';
             }
-
-
 
             //Process the Data
 
@@ -162,10 +161,9 @@ int main(int argc, char** argv) {
     //Exit Stage Stage!
     return 0;
 }
-void inventory(char name[], int gold, char weapon, char armor, char item){
+void inventory(int gold, char weapon, char armor, char item){
     cout<<endl;
     cout<<".:INVENTORY:.\n";
-    cout<<name<<endl;
     cout<<gold<<"g"<<endl;
     switch(weapon){
         case 'S':
@@ -191,6 +189,12 @@ void inventory(char name[], int gold, char weapon, char armor, char item){
             cout<<"Armor - N/A"<<endl;
     }
     switch(item){
+        case 'K':
+        case 'k':
+            cout<<"Item - Key"<<endl;
+        case 'M':
+        case 'm':
+            cout<<"Item - Snakeman Mask"<<endl;
         default:
             cout<<"Item - N/A"<<endl;
     }
@@ -267,7 +271,7 @@ bool ForestPath(int gold, char weapon, char armor, char item, char ans, bool sta
                     cout<<"** Body [2]\n";
                     cin>>attack;
                     if(attack == 1){
-                        if(rand() % 100 < 60){//40% random chance you kill him
+                        if(rand() % 100 < 60){//60% random chance you kill him
                             cout<<"**Your arrow pierces the spirits head, as he withers away so does all life around you.\n";
                             cout<<"Uh good job, at least the forest path is cleared and maybe the town back home can finally\n";
                             cout<<"go forward with building that mall and parking structure. ...Wait what are you doing? \n";
@@ -301,14 +305,282 @@ bool Idle(int gold, char weapon, char armor, char item, char ans, bool status){
     return false;
 }
 bool valley(int gold, char weapon, char armor, char item, char ans, bool status){
-    cout<<"gold "<<gold<<endl;
-    cout<<"weapon "<<weapon<<endl;
-    cout<<"armor "<<armor<<endl;
-    cout<<"item "<<item<<endl;
-    cout<<"ans "<<ans<<endl;
-    cout<<"status "<<status<<endl;
-    
+    int choice = 0;
+    int choice1 = 0;
+    cout<<"\nHere we are through the valley of the shadow of death about halfway to the castle.\n";
+    cout<<"What's that over there in the distance? It looks like a gang of, uhhhhhhhh snakemen!,\n";
+    cout<<"The same half-man, half-snake bipedal minions of the one who took the princess to the tower.\n";
+    cout<<"How should we deal with this situation?\n";
+    cout<<"**Approach them - [1]\n";
+    cout<<"**Sneak past them - [2]\n";
+    cout<<"**Check Inventory - [i]\n";
+    cin>>choice1;
+    switch(choice1){
+        case 1:
+            cout<<"Really. This should be good.\n";
+            cout<<"As you walk closer to their camp one of the snakemen notices you and motions to the others.\n";
+            cout<<"Their leader emerges from a tent at least a head taller than the rest.\n";
+            cout<<"\"The name'ssss Cobrakai. Whatsss are you doing here littlesss mansss\"\n\t-Cobrakai\n";
+            cout<<"**Tell them you mission -[1]\n";
+            cout<<"**Attempt to attack Cobrakai - [2]\n";
+            cout<<"**Ask him about Pokemon Go - [3]\n";
+            cin>>choice;
+            switch(choice){
+                case 1:
+                    cout<<"\"Well I'm not sssure why you just told us your planss but we are here to stop anyone attempting to take the princesssss\"\n";
+                    cout<<"Man that hissing thing is real annoying\n";
+                    cout<<"Cobrakai lunges towards you.\n";
+                    if(armor == 'S' || armor == 's'){
+                        cout<<"You raise your shield and and his fangs get stuck in the shield and he turns into wood himself\n";
+                        cout<<"**Your shield breaks\n";
+                        armor = 'N';
+                        cout<<"All the other snake dudes are struck with fear and let you pass\n";
+                        cout<<"The snakemen offer you the key to the castle out of fear.\n";
+                        return true;
+                    }else{
+                        cout<<"With nothing to protect you Cobrakai procedes to bite your head off.\n";
+                        cout<<"You dead.\n";
+                        return false;
+                    }
+                    break;
+                case 2:
+                    if(weapon == 'S' || weapon == 's'){
+                        if(rand() % 100 < 60){//60% Success Rate
+                            cout<<"You close your eyes and wildly swing your sword around for a good three and a half minutes.\n";
+                            cout<<"When you open you eyes you see that you've miraculously killed all the snakemen with ease.\n";
+                            cout<<"You loot the snakemens' camp and find a key marked \"Key to Castle\", how convenient?\n";
+                            return true;                            
+                        }else{
+                            cout<<"You wildly swing you sword around, but fail to hit any of the snakemen, as a result they all bite your head off.\n";
+                            return false;
+                        }
+                    }
+                    if(weapon == 'B' || weapon == 'b'){
+                        cout<<"You are too slow on the draw and the snakemen kill you.\n";
+                        cout<<"You're dead.\n";
+                        return false;
+                    }
+                    break;
+                case 3:
+                    cout<<"\"That doesssn't even exissst in thisss universsse.\"\n";
+                    cout<<"Cobrakai lunges towards you can bites your head off.\n";
+                    cout<<"Sssuch a tragedysss, sssorry too sssoon?\n";
+                    return false;
+                    break;
+                case 'I':
+                case 'i':
+                    inventory(gold, weapon, armor, item);
+                    break;  
+                default:
+                    cout<<"\"You're insesssent and incoherent babbling annoysss me\"\n";
+                    cout<<"Cobrakai lunges towards you can bties your head off.\n";
+                    cout<<"Sssuch a tragedysss, sssorry too sssoon?\n";
+                    return false;
+            }
+            break;
+        case 2:
+            cout<<"You wait until it's dark out and start to shimmy along the valley wall hoping that the snakemen don't notice\n";
+            cout<<"you, unfortunately you forgot that snakeman have night vision";
+            cout<<"You dead.\n";
+            return false;
+            break;
+        case 'I':
+        case 'i':
+        default :
+            inventory(gold, weapon, armor, item);
+            break;
+    }
 }
 bool castle(int gold, char weapon, char armor, char item, char ans, bool status){
-    
+    int choice = 0;
+    cout<<"**Hours later and bucket of water splashed on your face\n";
+    cout<<"**You open you eyes and see the evil ";
+    if (rand() % 100 < 60){
+        cout<<"Dragon! You were incredibly ill equipped for this moment.\n";
+        cout<<"What should you do?\n";
+        cout<<"**Attack - [1]\n";
+        cout<<"**Reason with it - [2]\n";
+        cout<<"**Pledge allegiance to evil - [3]\n";
+        cin>>choice;
+        switch(choice){
+            case 1:
+                if(weapon == 'S' || weapon == 's'){
+                    if(rand() % 100 < 60){
+                        cout<<"And a SWING... and a miss\n";
+                        cout<<"The Dragon picks you up with his claws and flings you out the window, this won't end well you know.\n";
+                        cout<<"**Splat**\n";
+                        return false;
+                    }else{
+                        cout<<"And a SWING... hey look you blinded him with your sword didn't know you had it in you.\n";
+                        cout<<"The Dragon flails around wildly smashing into the walls of the castle.\n";
+                        cout<<"You quickly grab the Princess and the Dragon's gold, Congrats you win!\n\n";
+                        cout<<".:OBTAINED:."<<endl;
+                        gold += 10000;
+                        cout<<gold<<"g"<<endl;
+                        return true;
+                    }
+                }
+                if(weapon == 'B' || weapon == 'b'){
+                    if(rand() % 100 < 50){
+                        cout<<"You quickly draw your bow and fire as quickly as possible, huh didn't know you had it in you.\n";
+                        cout<<"The Dragon flails around wildly smashing into the walls of the castle.\n";
+                        cout<<"You quickly grab the Princess and the Dragon's gold, Congrats you win!\n\n";
+                        cout<<".:OBTAINED:."<<endl;
+                        gold += 10000;
+                        cout<<gold<<"g"<<endl;
+                        return true;
+                    }else{
+                        cout<<"You missed every single shot? I should recruited that other random guy in town to do this job\n";
+                        cout<<"The Dragon opens it's mouth and burns to to ash.\n";
+                        cout<<"... and he takes your money.\n";
+                        cout<<".:LOST:."<<endl;
+                        gold -= gold;
+                        cout<<gold<<"g"<<endl;
+                        return false;
+                    }
+                }
+                break;
+            case 2:
+                cout<<"Dragons don't english dummy, he eats you.\n";
+                return false;
+                break;
+            case 3:
+                cout<<"What the hell man, what am I supposed to tell the village and King.\n";
+                cout<<"Alright enjoy living in this dusty tower with your dragon friend you jerk.\n";
+                return true;
+                break;
+        }
+    }else{
+        cout<<"...wait a second nobodies home, uh I guess we're late. Hey look Dragon's gold let's loot that and we'll count that as a win!\n";
+        cout<<".:OBTAINED:."<<endl;
+        gold += 10000;
+        cout<<gold<<"g"<<endl;
+        cout<<"\n**You Win!**\n";
+        return true;
+    }
+}
+bool castle1(int gold, char weapon, char armor, char item, char ans, bool status){
+    int choice = 0;
+    int choice2 = 0;
+    int choice3 = 0;
+    cout<<"You approach the castle and unlock the gates with the key.\n";
+    cout<<"The grounds are empty, so you enter the keep. The keep is empty but filthy with garbage and\n";
+    cout<<"mugs of beer on the ground, over in the corner you see the shopkeeper still obviously drunk.\n";
+    cout<<"\"Oh, you're the dude from town. Listen there was a crazy party here last night and some wench snatched my wallet.\n";
+    cout<<"You think you could spare some change and call me an Uber [-1g]?\"\n\t-Shopkeeper\n";
+    cout<<"**Yes - [1]\n";
+    cout<<"**Nah - [2]\n";
+    cout<<gold<<"g"<<endl;
+    cin>>choice;
+    switch(choice){
+        case 1:
+            if(gold < 1){
+                cout<<"\"On second thought maybe I'll just walk home good luck with the dragon upstairs.\"\n";
+                break;
+            }else{
+                cout<<"\"Awesome, here take this snakeman mask, if the Dragon upstairs isn't paying attention you\n";
+                cout<<"should be able to sneak by real quick\"\n";
+                item = 'M';
+                cout<<".:OBTAINED:."<<endl;
+                cout<<"Item - Snakeman Mask"<<endl;
+                break;
+            }
+            break;
+        case 2:
+            cout<<"\"Tell you what buy me the Uber and I'll give you this gun, deal?\"\n";
+            cout<<"**Yes -[1]\n";
+            cout<<"**No - [2]\n";
+            switch(choice2){
+                case 1:
+                    if(gold < 1){
+                        cout<<"\"Looks like you have no money. On second thought maybe I'll just walk home good luck with the dragon upstairs.\"\n";
+                        break;
+                    }else{
+                        cout<<"\"Awesome you're a life-saver. Also don't ask where I got that gun.\"\n";
+                        weapon = 'G';
+                        cout<<".:OBTAINED:."<<endl;
+                        cout<<"Weapon - Gun"<<endl;
+                        break;
+                    }
+            }
+            cin>>choice2;
+            cout<<"\"Aw alright fine, I'll walk.\"\n";
+            break;
+    }
+    cout<<"You walk upstairs into the dragon's lair.\n";
+    if(weapon == 'G'){
+        cout<<"Without any planning or thought you kick down the door guns blazing.\n";
+        cout<<"The dragon is killed before he even realizes you are there.\n";
+        cout<<"You collect the princess and the dragon's gold, You win!\n";
+        cout<<".:OBTAINED:."<<endl;
+        gold += 10000;
+        cout<<gold<<"g"<<endl;
+        return true;
+    }else if(item == 'M'){
+        cout<<"You walk in wearing the mask hoping the Dragon doesn't notice you.\n";
+        if(rand() % 100 < 50){
+            cout<<"The dragon turns and sees you but pays no attention to you, it worked!\n";
+            cout<<"You snatch up the princess and get out of there as fast as possible you win!\n";
+            return true;
+        }else{
+            cout<<"The dragon sees you immediately and doesn't buy into the costume.\n";
+            cout<<"He eats you, you're dead. You lose.\n";
+            return false;
+        }
+    }else{
+        cout<<"You were incredibly ill equipped for this moment.\n";
+        cout<<"What should you do?\n";
+        cout<<"**Attack - [1]\n";
+        cout<<"**Reason with it - [2]\n";
+        cout<<"**Pledge allegiance to evil - [3]\n";
+        cin>>choice;
+        switch(choice){
+            case 1:
+                if(weapon == 'S' || weapon == 's'){
+                    if(rand() % 100 < 60){
+                        cout<<"And a SWING... and a miss\n";
+                        cout<<"The Dragon picks you up with his claws and flings you out the window, this won't end well you know.\n";
+                        cout<<"**Splat**\n";
+                        return false;
+                    }else{
+                        cout<<"And a SWING... hey look you blinded him with your sword didn't know you had it in you.\n";
+                        cout<<"The Dragon flails around wildly smashing into the walls of the castle.\n";
+                        cout<<"You quickly grab the Princess and the Dragon's gold, Congrats you win!\n\n";
+                        cout<<".:OBTAINED:."<<endl;
+                        gold += 10000;
+                        cout<<gold<<"g"<<endl;
+                        return true;
+                    }
+                }
+                if(weapon == 'B' || weapon == 'b'){
+                    if(rand() % 100 < 50){
+                        cout<<"You quickly draw your bow and fire as quickly as possible, huh didn't know you had it in you.\n";
+                        cout<<"The Dragon flails around wildly smashing into the walls of the castle.\n";
+                        cout<<"You quickly grab the Princess and the Dragon's gold, Congrats you win!\n\n";
+                        cout<<".:OBTAINED:."<<endl;
+                        gold += 10000;
+                        cout<<gold<<"g"<<endl;
+                        return true;
+                    }else{
+                        cout<<"You missed every single shot? I should recruited that other random guy in town to do this job\n";
+                        cout<<"The Dragon opens it's mouth and burns to to ash.\n";
+                        cout<<"... and he takes your money.\n";
+                        cout<<".:LOST:."<<endl;
+                        gold -= gold;
+                        cout<<gold<<"g"<<endl;
+                        return false;
+                    }
+                }
+                break;
+            case 2:
+                cout<<"Dragons don't english dummy, he eats you.\n";
+                return false;
+                break;
+            case 3:
+                cout<<"What the hell man, what am I supposed to tell the village and King.\n";
+                cout<<"Alright enjoy living in this dusty tower with your dragon friend you jerk.\n";
+                return true;
+                break;
+        }
+    }
 }
