@@ -236,6 +236,7 @@ bool InnPath(int gold, char weapon, char armor, char item, char ans, bool status
                 return false;
             case 'W':
             case 'w':
+            default :
                 cout<<"\"Well let me tell you that while these woods are haunted the spirit that protects them certainly will not\n";
                 cout<<"harm you unless provoked.\"\n\t-Innkeeper\n";
                 cout<<"You leave the inn and back to the fork in the woods, and deeper into the forest.\n";
@@ -254,7 +255,7 @@ bool ForestPath(int gold, char weapon, char armor, char item, char ans, bool sta
         cout<<"Oh your gonna go up to the castle, and save the princess and kill that evil guy?\n";
         cout<<"Sure I can get behind that 'lemme just summon a moose you can ride that bad boy all\n";
         cout<<"the way through the forest no problem. Good Luck!\n";
-  
+        return true;
     }else{
         switch(weapon){
                 case 's':
@@ -490,6 +491,7 @@ bool castle1(int gold, char weapon, char armor, char item, char ans, bool status
             cout<<"\"Tell you what buy me the Uber and I'll give you this gun, deal?\"\n";
             cout<<"**Yes -[1]\n";
             cout<<"**No - [2]\n";
+            cin>>choice2;
             switch(choice2){
                 case 1:
                     if(gold < 1){
