@@ -134,7 +134,7 @@ void ships(char board[][YAXIS], int size){
                 if(board[xcoord][i] == '^')
                     goto Placement;
             }
-            for(int j = ycoord; j <ycoord +size; j++){
+            for(int j = ycoord; j <ycoord + size; j++){
                 board[xcoord][j] = '^';
             }
         }
@@ -218,33 +218,33 @@ void controls(int shots, int nbships){
 }
 void gameplay(char player[][YAXIS], int& xcor, int& ycor, char opponent[][YAXIS], int& shots, int& score, bool& win){
     for(int i = 1; i <= shots && !win; i++){
-    generateboard(player);
-    cout<<"\nShot(s) #"<<i<<", enter the y, then the x coordinate.\n";
-    cout<<"(e.g. x,y)\n";
-    do{
-        char comma = ',';
-        cin>>xcor;
-        cin>>comma;
-        cin>>ycor;
-    }while(xcor < 1 || xcor > 10 || ycor < 1 || ycor > 10);
+        generateboard(player);
+        cout<<"\nShot(s) #"<<i<<", enter the y, then the x coordinate.\n";
+        cout<<"(e.g. x,y)\n";
+        do{
+            char comma = ',';
+            cin>>xcor;
+            cin>>comma;
+            cin>>ycor;
+        }while(xcor < 1 || xcor > 10 || ycor < 1 || ycor > 10);
 
-    //Successful Hit
-    if(opponent[xcor - 1][ycor - 1] == '^'){
-        cout<<setw(3)<<"\nHIT!"<<setw(3)<<endl;
-        opponent[xcor - 1][ycor - 1] = 'x';
-        player[xcor - 1][ycor - 1] = 'x';
-        cout<<setw(3)<<shots - i<<"/"<<shots<<" shots left!\n";
-        score += 10;
+        //Successful Hit
+        if(opponent[xcor - 1][ycor - 1] == '^'){
+            cout<<setw(3)<<"\nHIT!"<<setw(3)<<endl;
+            opponent[xcor - 1][ycor - 1] = 'x';
+            player[xcor - 1][ycor - 1] = 'x';
+            cout<<setw(3)<<shots - i<<"/"<<shots<<" shots left!\n";
+            score += 10;
 
-    //Unsuccessful Hit
-    }else if(opponent[xcor - 1][ycor - 1] == '+'){
-        cout<<setw(3)<<"\nMISS!"<<setw(3)<<endl;
-        opponent[xcor - 1][ycor - 1] = 'o';
-        player[xcor - 1][ycor - 1] = 'o';
-        cout<<setw(3)<<shots - i<<"/"<<shots<<" shots left!\n";
-    }
-    win = true;
-    checkwin(opponent, win, score);
+        //Unsuccessful Hit
+        }else if(opponent[xcor - 1][ycor - 1] == '+'){
+            cout<<setw(3)<<"\nMISS!"<<setw(3)<<endl;
+            opponent[xcor - 1][ycor - 1] = 'o';
+            player[xcor - 1][ycor - 1] = 'o';
+            cout<<setw(3)<<shots - i<<"/"<<shots<<" shots left!\n";
+        }
+        win = true;
+        checkwin(opponent, win, score);
     }   
 }
 void winlose(char opponent[][YAXIS], int& score, bool& win, int& wins, int& loses){
@@ -268,7 +268,7 @@ char restart(char& ans, int wins, int loses, int score, ofstream& out){
     out<<"Loses: "<<loses;
     out<<endl<<endl;
     out<<"Final Score: "<<score;
-    cout<<endl<<endl;
+    out<<endl<<endl;
     out<<"Final Board: ";
     out<<endl<<endl;
     
